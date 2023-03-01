@@ -1,15 +1,27 @@
 
 
-const UserTarj = () => {
+const UserTarj = ({ userData }) => {
+
+  
+    
+    console.log(userData)
     return (
-        <div>
+        <div className="user-card">
             <h1>GALLETAS DE LA FORTUNA</h1>
-            <img src="/profesor.jpg" alt="" />
-        <ul>
-            <li>Lo que sospechabas es verdad, procura ser amable con ellos, pues esta bondad ayudará a que todo mejore.</li>
             
-        </ul>
-        </div>
+            <img src="/fondo1.jpg" alt="" />
+            
+            <h1>Frase</h1>
+           
+            <h1>hola :{ userData?.phrase}</h1>
+
+            
+            
+        
+
+        
+
+      </div>  
     )
     
 }
