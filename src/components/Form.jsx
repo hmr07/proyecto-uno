@@ -1,38 +1,50 @@
 
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 
-const Form = () => {
+const Form = ( { createUser, selectedUser, updateUser } ) => {
 
     //useForm -> Custom Hook
     //Lo ejecutamos. Retorna un objeto. Vamos a desestructurar dos propiedades muy importantes: register y handleSubmit.
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
     
-    const submit = data => {
-        data.id = Date.now()
-        console.log( data )
 
-        //Si el envio de informacion ocurre con exito
-        //Limpio el formulario
-        emptyForm()
+    //Instruccion (efecto) qu queremos que se lleve a cabo cuando el componente se monta y cuando alguno (o varios) de los estados o propiedades es modificado
+    useEffect(() => {
+        //Determinar si hay un un usuario seleccionado
+        if( selectedUser ){ // null , { informacionUsuario }
+            //Si lo hay se cargara su info
+            reset( selectedUser )    
+        }else{
+            //Si no lo hay, el formulario estara vacio
+            emptyForm()
+        }
+
+    }, [ selectedUser ]);
+
+
+    const submit = data => {
+        if( selectedUser ){
+            //Si hay usuario seleccionado
+            //Edicion de usuario YA existente
+            updateUser( data )
+
+        }else{
+            //Si NO hay usuario seleccionado
+            //Crear NUEVO usuario
+
+            data.id = Date.now()
+            //Sacar el objeto data
+            createUser( data )
+            //Si el envio de informacion ocurre con exito
+            //Limpio el formulario
+            emptyForm()
+        }
     }
 
     //reset
     //Lo que hace es recibir un objeto que como propiedades va a tener los nombres de los diferentes inputs del formulario
     //Los valores que tengan  las propiedades de este objeto se setearan como valores del input
-
-    //Valores por default
-    const fillForm = () => {
-        reset( 
-            {
-                email: "john@gmail.com",
-                password: "john1234",
-                first_name: "John",
-                last_name: "Doe",
-                birthday: "1993-10-10",
-                username : "jhondoe123"
-            }
-        )
-    }
     
     //Limpieza del formulario
     const emptyForm = () => {
@@ -42,8 +54,7 @@ const Form = () => {
                 password: "",
                 first_name: "",
                 last_name: "",
-                birthday: "",
-                username : ""
+                birthday: ""
             }
         )
     }
@@ -51,37 +62,7 @@ const Form = () => {
     return (
         <div>
             <form onSubmit={ handleSubmit( submit ) }>
-                <div>
-                    <label 
-                    htmlFor="username">
-                        Nombre de usuario
-                    </label>
-                    <input 
-                    type="text" 
-                    id="username" 
-                    placeholder="Tu nombre de usuario va aqui..."
-                    { ...register("username", { required: true } ) }
-                    />
-
-
-                    { 
-                    errors.username?.type === 'required' && <p role="alert" style={{ color: 'tomato' }}>
-                        El nombre de usuario es requerido</p> 
-                    }
-                </div>
-                <div>
-                    <label 
-                    htmlFor="email">
-                        Correo
-                    </label>
-                    <input 
-                    type="email" 
-                    id="email" 
-                    placeholder="jhon@gmail.com"
-                    { ...register("email", { required: true }) }
-                    />
-                </div>
-                <div>
+                <div className="input-wrapper">
                     <label 
                     htmlFor="first_name">
                         Nombre
@@ -93,7 +74,7 @@ const Form = () => {
                     { ...register("first_name", { required: true }) }
                     />
                 </div>
-                <div>
+                <div className="input-wrapper">
                     <label 
                     htmlFor="last_name">
                         Apellido
@@ -105,7 +86,19 @@ const Form = () => {
                     { ...register("last_name", { required: true }) }
                     />
                 </div>
-                <div>
+                <div className="input-wrapper">
+                    <label 
+                    htmlFor="email">
+                        Correo
+                    </label>
+                    <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="jhon@gmail.com"
+                    { ...register("email", { required: true }) }
+                    />
+                </div>
+                <div className="input-wrapper">
                     <label 
                     htmlFor="birthday">
                         Fecha de nacimiento
@@ -117,7 +110,7 @@ const Form = () => {
                     { ...register("birthday", { required: true }) }
                     />
                 </div>
-                <div>
+                <div className="input-wrapper">
                     <label 
                     htmlFor="password">
                         Contraseña
@@ -135,12 +128,8 @@ const Form = () => {
                     Completar registro
                 </button>
             </form>
-
-            <button onClick={ fillForm }> LLenar formulario </button>
         </div>
     );
 }
 
 export default Form;
-
-
