@@ -50,11 +50,11 @@ const Form = ( { createUser, selectedUser, updateUser } ) => {
     const emptyForm = () => {
         reset(
             {
-                email: "",
-                password: "",
-                first_name: "",
+                name: "",
+                category: "",
+                price: "",
                 last_name: "",
-                birthday: ""
+                isAvailable: ""
             }
         )
     }
@@ -64,50 +64,50 @@ const Form = ( { createUser, selectedUser, updateUser } ) => {
             <form onSubmit={ handleSubmit( submit ) }>
                 <div className="input-wrapper">
                     <label 
-                    htmlFor="first_name">
+                    htmlFor="name">
                         Nombre
                     </label>
                     <input 
                     type="text" 
-                    id="first_name" 
-                    placeholder="Susana"
-                    { ...register("first_name", { required: true }) }
+                    id="name" 
+                    placeholder="Bombas"
+                    { ...register("name", { required: true }) }
                     />
                 </div>
                 <div className="input-wrapper">
                     <label 
-                    htmlFor="last_name">
-                        Apellido
+                    htmlFor="category">
+                        Categoria
                     </label>
                     <input 
                     type="text" 
-                    id="last_name" 
-                    placeholder="Distancia"
-                    { ...register("last_name", { required: true }) }
+                    id="category" 
+                    placeholder="Alta"
+                    { ...register("category", { required: true }) }
                     />
                 </div>
                 <div className="input-wrapper">
                     <label 
-                    htmlFor="email">
-                        Correo
+                    htmlFor="price">
+                        Precio
                     </label>
                     <input 
-                    type="email" 
-                    id="email" 
-                    placeholder="jhon@gmail.com"
-                    { ...register("email", { required: true }) }
+                    type="price" 
+                    id="price" 
+                    placeholder="50"
+                    { ...register("price", { required: true }) }
                     />
                 </div>
                 <div className="input-wrapper">
                     <label 
-                    htmlFor="birthday">
-                        Fecha de nacimiento
+                    htmlFor="isAvailable">
+                        Disponible
                     </label>
                     <input 
-                    type="date" 
-                    id="birthday" 
-                    placeholder="1995-04-02"
-                    { ...register("birthday", { required: true }) }
+                    type="isAvailable" 
+                    id="isAvailable" 
+                    placeholder="10"
+                    { ...register("isAvailable", { required: true }) }
                     />
                 </div>
                 <div className="input-wrapper">
